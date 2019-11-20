@@ -83,7 +83,7 @@ class Shapes(Scene):
         self.add(Y_Axis)
         self.add(X_Axis)
        ## self.setup_axes
-        shape1 = Polygon(a[0], a[1], a[2], a[3],a[4],a[5],a[6],a[7],a[8],a[9])
+        shape1 = Polygon(*a)
         ##self.play(ShowCreation(shape1))
         ##shape3 = shape1
         unitScale = 2
@@ -108,7 +108,7 @@ class Shapes(Scene):
         for i in range(len(a)):
             a[i] = TransformMatrix(T_origin_reflection, a[i])
         print(a)
-        shape2 = Polygon(a[0], a[1], a[2], a[3],a[4],a[5],a[6],a[7],a[8],a[9])
+        shape2 = Polygon(*a)
         shape2.set_fill(GREEN, opacity=1)
         shape2.fill_opacity = 1;
         ##print(shape2.points)

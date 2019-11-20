@@ -23,6 +23,8 @@ manim.sublime-workspace
 build/
 dist/
 manim.egg-info/
+tuts.py
+tryStuff.py
 
 primes.py
 /media_dir.txt
