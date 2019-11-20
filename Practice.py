@@ -1,7 +1,8 @@
 from manimlib.imports import *
 from tkinter import *
 import numpy as np
-from tuts import *
+#from tuts import *
+import gui
 import os
 import pyclbr
 
@@ -11,39 +12,9 @@ class Shapes(Scene):
     # A few simple shapes
 
     def construct(self):
-        a = []
         strings = []
-        root = Tk()
-
-        def add_point():
-            global n
-            n = n + 1
-            print(n)
-            a.append(np.array([int(x.get()), int(y.get()), 1]))
-            print(a[n-1])
-           ## list1 = a[n-1]
-            list1 = [str(v) for v in a[n-1]]
-            strings.append('\n'.join(list1))
-
-            ##strings.append('\n'.join(np.array([1,1,1]).tolist()))
-            label = Label(root, text=x.get() + " " + y.get())
-            label.pack()
-            x.delete(0, 'end')
-            y.delete(0, 'end')
-
-        x = Entry(root, width=20)
-        x.pack()
-        y = Entry(root, width=20)
-        y.pack()
-
-        add = Button(root, text="Add Point", command=add_point)
-        add.pack()
-        Button(root, text="Run", command=root.destroy).pack()
-
-        root.mainloop()
-
-        global n
-        l = n
+        a = gui.data()
+        l = len(a)
         if l < 10:
             for i in range(l, 10):
                 a.append([a[l - 1][0], a[l - 1][1], 0])
