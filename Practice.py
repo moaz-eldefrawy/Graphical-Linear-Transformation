@@ -1,71 +1,36 @@
 from manimlib.imports import *
+from tkinter import *
+import numpy as np
+#from tuts import *
+import gui
+import inputs
 import os
 import pyclbr
-from tkinter import *
-##import numpy as np
+import gui
+
 n = 0
 
 class Shapes(Scene):
     # A few simple shapes
 
     def construct(self):
-        ##print(CONFIG)
-        CONFIG = {"plane_kwargs": {
-            "x_line_frequency": 2,
-            "y_line_frequency": 2
-        },
-            "camera_class": ThreeDCamera,
-            "ambient_camera_rotation": None,
-            "default_angled_camera_orientation_kwargs": {
-                "phi": 90 * DEGREES,
-                "theta": -135 * DEGREES,
-            }
-        }
-        ##self.set_camera_orientation(phi= , gamma=0)
-        a = [np.array([1,1,0]),np.array([1,2,0]),np.array([2,2,0]),np.array([2,1,0])]
-        '''
         strings = []
-        root = Tk()
+        a = gui.data().points
+        l = len(a)
 
-        def add_point():
-            global n
-            n = n + 1
-            print(n)
-            a.append(np.array([int(x.get()), int(y.get()), 1]))
-            print(a[n-1])
-           ## list1 = a[n-1]
-            list1 = [str(v) for v in a[n-1]]
-            strings.append('\n'.join(list1))
 
-            ##strings.append('\n'.join(np.array([1,1,1]).tolist()))
-            label = Label(root, text=x.get() + " " + y.get())
-            label.pack()
-            x.delete(0, 'end')
-            y.delete(0, 'end')
 
-        x = Entry(root, width=20)
-        x.pack()
-        y = Entry(root, width=20)
-        y.pack()
-
-        add = Button(root, text="Add Point", command=add_point)
-        add.pack()
-        Button(root, text="Run", command=root.destroy).pack()
-
-        root.mainloop()
-
-        global n
-        l = n
-        '''
         for x in range(-10, 10):
             for y in range(-10, 10):
                 self.add(Dot(np.array([x, y, 2]), color=DARK_GREY))
 
-        a.append
+
 
 
         a = np.asarray(a);
 
+
+        print(strings)
         someTransformation = np.array([[2, 1, 1],
                                 [-1, -1, 3],
                                 [1, 1, -1]])
@@ -85,23 +50,22 @@ class Shapes(Scene):
                             [0, 1, 0],
                             [0, 0, 1]])
 
-       ## Y_Axis = Line(np.array([0, 10, 0]), np.array([0, -10, 0]))
-        ##X_Axis = Line(np.array([10, 0, 0]), np.array([-10, 0, 0]))
-      ##  self.add(Y_Axis)
-       ## self.add(X_Axis)
+        Y_Axis = Line(np.array([0, 10, 0]), np.array([0, -10, 0]))
+        X_Axis = Line(np.array([10, 0, 0]), np.array([-10, 0, 0]))
+        self.add(Y_Axis)
+        self.add(X_Axis)
        ## self.setup_axes
         shape1 = Polygon(*a)
 
 
-        self.play(ShowCreation(shape1))
-        self.wait(3)
-
+        ##self.play(ShowCreation(shape1))
         ##shape3 = shape1
         unitScale = 2
         ##shape3.scale(2)
 
         ##self.play(ApplyMethod(shape1.shift, np.array([1, 1, 0])))
         ##self.play(ShowCreation(shape3))
+        self.wait(1)
        ## shape1.scale(3)
        ## shape1.stroke_width = 10
        ## shape1.set_fill(WHITE, opacity=1)
@@ -135,5 +99,3 @@ def TransformMatrix(TransMatrix, point):
 
     c = c.reshape(1, 3)
     return c
-
-
