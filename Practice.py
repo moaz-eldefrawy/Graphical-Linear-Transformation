@@ -1,17 +1,29 @@
 from manimlib.imports import *
-from tkinter import *
-import numpy as np
-from tuts import *
 import os
 import pyclbr
-
+from tkinter import *
+##import numpy as np
 n = 0
 
 class Shapes(Scene):
     # A few simple shapes
 
     def construct(self):
-        a = []
+        ##print(CONFIG)
+        CONFIG = {"plane_kwargs": {
+            "x_line_frequency": 2,
+            "y_line_frequency": 2
+        },
+            "camera_class": ThreeDCamera,
+            "ambient_camera_rotation": None,
+            "default_angled_camera_orientation_kwargs": {
+                "phi": 90 * DEGREES,
+                "theta": -135 * DEGREES,
+            }
+        }
+        ##self.set_camera_orientation(phi= , gamma=0)
+        a = [np.array([1,1,0]),np.array([1,2,0]),np.array([2,2,0]),np.array([2,1,0])]
+        '''
         strings = []
         root = Tk()
 
@@ -44,21 +56,16 @@ class Shapes(Scene):
 
         global n
         l = n
-        if l < 10:
-            for i in range(l, 10):
-                a.append([a[l - 1][0], a[l - 1][1], 0])
-
+        '''
         for x in range(-10, 10):
             for y in range(-10, 10):
                 self.add(Dot(np.array([x, y, 2]), color=DARK_GREY))
 
-
+        a.append
 
 
         a = np.asarray(a);
 
-
-        print(strings)
         someTransformation = np.array([[2, 1, 1],
                                 [-1, -1, 3],
                                 [1, 1, -1]])
@@ -78,22 +85,23 @@ class Shapes(Scene):
                             [0, 1, 0],
                             [0, 0, 1]])
 
-        Y_Axis = Line(np.array([0, 10, 0]), np.array([0, -10, 0]))
-        X_Axis = Line(np.array([10, 0, 0]), np.array([-10, 0, 0]))
-        self.add(Y_Axis)
-        self.add(X_Axis)
+       ## Y_Axis = Line(np.array([0, 10, 0]), np.array([0, -10, 0]))
+        ##X_Axis = Line(np.array([10, 0, 0]), np.array([-10, 0, 0]))
+      ##  self.add(Y_Axis)
+       ## self.add(X_Axis)
        ## self.setup_axes
         shape1 = Polygon(*a)
 
 
-        ##self.play(ShowCreation(shape1))
+        self.play(ShowCreation(shape1))
+        self.wait(3)
+
         ##shape3 = shape1
         unitScale = 2
         ##shape3.scale(2)
 
         ##self.play(ApplyMethod(shape1.shift, np.array([1, 1, 0])))
         ##self.play(ShowCreation(shape3))
-        self.wait(1)
        ## shape1.scale(3)
        ## shape1.stroke_width = 10
        ## shape1.set_fill(WHITE, opacity=1)
@@ -128,30 +136,4 @@ def TransformMatrix(TransMatrix, point):
     c = c.reshape(1, 3)
     return c
 
-
-class UsingBraces(Scene):
-    #Using braces to group text together
-    def construct(self):
-        eq1A = TextMobject("4x + 3y")
-        eq1B = TextMobject("=")
-        eq1C = TextMobject("0")
-        eq2A = TextMobject("5x -2y")
-        eq2B = TextMobject("=")
-        eq2C = TextMobject("3")
-        eq1B.next_to(eq1A,RIGHT)
-        eq1C.next_to(eq1B,RIGHT)
-      ##  eq2A.shift(DOWN)
-       ## eq2B.shift(DOWN)
-       ## eq2C.shift(DOWN)
-        eq2A.align_to(eq1A,DOWN)
-        eq2B.align_to(eq1B,DOWN)
-        eq2C.align_to(eq1C,DOWN)
-
-        eq_group=VGroup(eq1A,eq2A)
-        braces=Brace(eq_group,LEFT)
-        eq_text = braces.get_text("A pair of equations")
-
-        self.add(eq1A, eq1B, eq1C)
-        self.add(eq2A, eq2B, eq2C)
-        self.play(GrowFromCenter(braces),Write(eq_text))
 
