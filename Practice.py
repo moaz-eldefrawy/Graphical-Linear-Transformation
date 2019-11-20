@@ -3,6 +3,7 @@ from tkinter import *
 import numpy as np
 #from tuts import *
 import gui
+import inputs
 import os
 import pyclbr
 
@@ -13,7 +14,7 @@ class Shapes(Scene):
 
     def construct(self):
         strings = []
-        a = gui.data()
+        a = gui.data().points
         l = len(a)
         if l < 10:
             for i in range(l, 10):
