@@ -6,6 +6,7 @@ import gui
 import inputs
 import os
 import pyclbr
+import gui
 
 n = 0
 
@@ -19,6 +20,8 @@ class Shapes(Scene):
         if l < 10:
             for i in range(l, 10):
                 a.append([a[l - 1][0], a[l - 1][1], 0])
+
+
 
         for x in range(-10, 10):
             for y in range(-10, 10):
