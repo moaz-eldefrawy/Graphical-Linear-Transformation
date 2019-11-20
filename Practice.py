@@ -1,7 +1,9 @@
 from manimlib.imports import *
 from tkinter import *
 import numpy as np
-from tuts import *
+#from tuts import *
+import gui
+import inputs
 import os
 import pyclbr
 import gui
@@ -12,8 +14,14 @@ class Shapes(Scene):
     # A few simple shapes
 
     def construct(self):
-        a = gui.data()
+        strings = []
+        a = gui.data().points
         l = len(a)
+        if l < 10:
+            for i in range(l, 10):
+                a.append([a[l - 1][0], a[l - 1][1], 0])
+
+
 
         for x in range(-10, 10):
             for y in range(-10, 10):
