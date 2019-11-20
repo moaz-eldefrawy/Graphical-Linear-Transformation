@@ -84,6 +84,8 @@ class Shapes(Scene):
         self.add(X_Axis)
        ## self.setup_axes
         shape1 = Polygon(*a)
+
+
         ##self.play(ShowCreation(shape1))
         ##shape3 = shape1
         unitScale = 2
