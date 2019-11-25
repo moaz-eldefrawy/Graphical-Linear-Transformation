@@ -4,11 +4,11 @@ from tkinter import *
 root = Tk()
 
 
-def Run():
-    subprocess.run(["python", "-m", "manim", "Practice.py", "-pl"])
+def run():
+    subprocess.run(["python", "-m", "manim", "Practice.py", "Shapes", "-pl"])
 
 
-run = Button(root, text="Run", command=Run)
+run = Button(root, text="Run", command=run)
 run.pack()
 
 
