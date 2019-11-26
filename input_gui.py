@@ -1,15 +1,14 @@
 from tkinter import *
 from manimlib.imports import *
-import inputs
+import data
 
-#subprocess.run(["python", "-m", "manim", "Practice.py", "-pl"])
 '''
 python -m manim Practice.py -pl
 '''
 
 
-def data():
-    print("###################Input Status######################")
+def inputs():
+
     a = []
     point_labels = []
     entry_list = []
@@ -75,10 +74,12 @@ def data():
     root.mainloop()
 
     print("###################Input Status######################")
+    print("Points: ")
+    print(a)
     print(entry_values)
     print("#####################################################")
 
-    return inputs.Inputs(a,
+    return data.Inputs(a,
                          entry_values[0],
                          entry_values[1],
                          entry_values[2],
