@@ -9,7 +9,7 @@ python -m manim Practice.py -pl
 
 
 def data():
-
+    print("###################Input Status######################")
     a = []
     point_labels = []
     entry_list = []
