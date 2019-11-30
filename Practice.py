@@ -10,26 +10,44 @@ import gui
 
 n = 0
 
+
 class Shapes(Scene):
     # A few simple shapes
 
     def construct(self):
-        strings = []
-        a = gui.data().points
-        l = len(a)
+        grid = NumberPlane()
+        self.play(
+            ShowCreation(grid, run_time=3, lag_ratio=0.1),
+        )
+        ##inputData = gui.data()
+        inputPoints = [[-1 ,-1 , 0],
+                     [-1 ,-2 , 0],
+                     [-2 ,-2  ,0],
+                     [-2 ,-1,  0]]
+        '''
+        rot = inputData.rot
+        scale = inputData.scale
+        shift_x = inputData.shift_x
+        shift_y = inputData.shift_y
+        '''
+        ##inputPoints = inputData.points
+
+        ##print(" A is : ")
+        ##print(a)
+        l = len(inputPoints)
+        print(self)
+
+        ##self.set_camera()
+     #   for x in range(-10, 10):
+         #   for y in range(-10, 10):
+         #       self.add(Dot(np.array([x, y, 2]), color=DARK_GREY))
 
 
-        for x in range(-10, 10):
-            for y in range(-10, 10):
-                self.add(Dot(np.array([x, y, 2]), color=DARK_GREY))
 
 
+        inputPoints = np.asarray(inputPoints);
 
 
-        a = np.asarray(a);
-
-
-        print(strings)
         someTransformation = np.array([[2, 1, 1],
                                 [-1, -1, 3],
                                 [1, 1, -1]])
@@ -53,8 +71,8 @@ class Shapes(Scene):
         X_Axis = Line(np.array([10, 0, 0]), np.array([-10, 0, 0]))
         self.add(Y_Axis)
         self.add(X_Axis)
-       ## self.setup_axes
-        shape1 = Polygon(*a)
+        ## self.setup_axes
+        shape1 = Polygon(*inputPoints)
 
 
         ##self.play(ShowCreation(shape1))
@@ -65,9 +83,9 @@ class Shapes(Scene):
         ##self.play(ApplyMethod(shape1.shift, np.array([1, 1, 0])))
         ##self.play(ShowCreation(shape3))
         self.wait(1)
-       ## shape1.scale(3)
-       ## shape1.stroke_width = 10
-       ## shape1.set_fill(WHITE, opacity=1)
+        ## shape1.scale(3)
+        ## shape1.stroke_width = 10
+        ## shape1.set_fill(WHITE, opacity=1)
         ##shape1.rotate(45 * DEGREES)
 
 
@@ -78,10 +96,10 @@ class Shapes(Scene):
        ## self.play(FadeOut(shape1))
         factor = 3
       ##  self.play(FadeInFromLarge(shape1, scale_factor=factor))
-        for i in range(len(a)):
-            a[i] = TransformMatrix(T_origin_reflection, a[i])
-        print(a)
-        shape2 = Polygon(*a)
+        for i in range(len(inputPoints)):
+            inputPoints[i] = TransformMatrix(T_origin_reflection, inputPoints[i])
+        print(inputPoints)
+        shape2 = Polygon(*inputPoints)
         shape2.set_fill(GREEN, opacity=1)
         shape2.fill_opacity = 1;
         ##print(shape2.points)

@@ -14,7 +14,7 @@ def data():
     a = []
     point_labels = []
     entry_list = []
-    entry_values = [0,0,0,0]
+    entry_values = []
 
     def add_point():
         a.append(np.array([int(x_in.get()), int(y_in.get()), 1]))
@@ -80,7 +80,7 @@ def data():
     root.mainloop()
     print("#####################################################")
 
-
+    print(entry_values)
     return inputs.Inputs(a,
                          entry_values[0],
                          entry_values[1],

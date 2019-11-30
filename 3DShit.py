@@ -28,11 +28,26 @@ class Shapes(ThreeDScene):
         ## PI for Vertical and Gamma Horizontal
         self.set_camera_orientation(phi=70 * DEGREES, theta=-90 * DEGREES)
 
+        ##sphere = self.get_sphere()
+        cube = Cube()
+        prism = Prism()
+        self.play(ShowCreation(cube))
+      ##  self.play(ReplacementTransform(sphere, cube))
+        self.play(ReplacementTransform(cube, prism))
+        self.wait(2)
+
         for i in range(-10, 10):
             Y_Axis = Line(np.array([i, 10, 0]), np.array([i, -10, 0]))
             X_Axis = Line(np.array([10, i, 0]), np.array([-10, i, 0]))
+            X_Axis.set_color(GREEN)
+            Y_Axis.set_color(GREEN)
             self.add(Y_Axis)
             self.add(X_Axis)
+
+        Z_Axis = Line(np.array([0, 0, -10]), np.array([0, 0, 10]))
+        Z_Axis.set_color(WHITE)
+       ## Z_Axis.color = #ff000:
+        self.add(Z_Axis)
 
 
         ##self.set_camera_orientation(phi= , gamma=0)
@@ -42,45 +57,11 @@ class Shapes(ThreeDScene):
              np.array([2,1,0]), np.array([2,1,1]),## np.array([2,1,0]),
              np.array([1, 1, 1]), np.array([1, 2, 1]), np.array([2, 2, 1]),  np.array([2, 1, 1]),
              np.array([2, 1, 0])]
-        '''
-        strings = []
-        root = Tk()
 
-        def add_point():
-            global n
-            n = n + 1
-            print(n)
-            a.append(np.array([int(x.get()), int(y.get()), 1]))
-            print(a[n-1])
-           ## list1 = a[n-1]
-            list1 = [str(v) for v in a[n-1]]
-            strings.append('\n'.join(list1))
-
-            ##strings.append('\n'.join(np.array([1,1,1]).tolist()))
-            label = Label(root, text=x.get() + " " + y.get())
-            label.pack()
-            x.delete(0, 'end')
-            y.delete(0, 'end')
-
-        x = Entry(root, width=20)
-        x.pack()
-        y = Entry(root, width=20)
-        y.pack()
-
-        add = Button(root, text="Add Point", command=add_point)
-        add.pack()
-        Button(root, text="Run", command=root.destroy).pack()
-
-        root.mainloop()
-
-        global n
-        l = n
-        '''
         for x in range(-10, 10):
             for y in range(-10, 10):
                 self.add(Dot(np.array([x, y, 0]), color=DARK_GREY))
 
-        a.append
 
 
         a = np.asarray(a);
