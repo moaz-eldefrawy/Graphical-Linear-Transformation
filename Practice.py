@@ -16,9 +16,7 @@ class Shapes(Scene):
         strings = []
         Data = input_gui.inputs()
         l = len(Data.points)
-
-
-
+        a = Data.points
         for x in range(-10, 10):
             for y in range(-10, 10):
                 self.add(Dot(np.array([x, y, 2]), color=DARK_GREY))
@@ -93,7 +91,7 @@ class Shapes(Scene):
         self.play(Transform(shape1, shape2))
         ##self.play(ApplyMethod(shape2.shift, np.array([0, 1, 0])))
         self.wait(5)
-        output_gui.output(data.Outputs(a), Data)
+        output_gui.outputs(data.Outputs(a), Data)
 
         ##shape2 =
 
