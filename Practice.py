@@ -19,7 +19,6 @@ class Shapes(Scene):
         l = len(a)
 
 
-
         for x in range(-10, 10):
             for y in range(-10, 10):
                 self.add(Dot(np.array([x, y, 2]), color=DARK_GREY))
