@@ -67,6 +67,7 @@ def inputs():
     entry_list.append(shift_y_in)
     shift_y_in.grid(row=3, column=3, padx=(5, 5), pady=(5, 5))
 
+
     Button(root, text="Run", command=end).grid(row = 6,column = 1)
 
     Label(text="Points:").grid(row=7, column=0)
@@ -79,7 +80,7 @@ def inputs():
     print(entry_values)
     print("#####################################################")
 
-    return data.Inputs(a,
+    return data.Inputs(  a,
                          entry_values[0],
                          entry_values[1],
                          entry_values[2],

@@ -12,7 +12,6 @@ import math
 
 class Shapes(Scene):
     # A few simple shapes
-
     def construct(self):
         strings = []
         Data = input_gui.inputs()
@@ -33,18 +32,23 @@ class Shapes(Scene):
         T_X_axis_reflection = np.array([[1, 0, 0],
                                         [0, -1, 0],
                                         [0, 0, 1]])
+
+
         cos = math.cos(math.radians(Data.rot))
         sin = math.sin(math.radians(Data.rot))
         T_rotation = np.array([[cos, sin, 0],
                                [-1*sin, cos, 0],
                                [0, 0, 1]])
+
         T_Y_axis_reflection = np.array([[-1, 0, 0],
                                         [0, 1, 0],
                                         [0, 0, 1]])
 
+
         T_origin_reflection = np.array([[-1, 0, 0],
                                         [0, -1, 0],
                                         [0, 0, 1]])
+
         shearValue = 2
         T_shear = np.array([[1, shearValue, 0],
                             [0, 1, 0],
@@ -74,23 +78,23 @@ class Shapes(Scene):
         ## self.play(FadeOut(shape1))
         factor = 3
         ##  self.play(FadeInFromLarge(shape1, scale_factor=factor))
+
         for i in range(len(a)):
-            a[i] = TransformMatrix(T_rotation, a[i])
+            a[i] = TransformMatrix(T_origin_reflection, a[i])
+
         print(a)
+
         shape2 = Polygon(*a)
+
         shape2.set_fill(GREEN, opacity=1)
         shape2.fill_opacity = 1;
         ##print(shape2.points)
         self.play(Transform(shape1, shape2))
         ##self.play(ApplyMethod(shape2.shift, np.array([0, 1, 0])))
         self.wait(5)
-
-
-        output_gui.output(data.Outputs(a))
+        output_gui.output(data.Outputs(a), Data)
 
         ##shape2 =
-
-
 
 
 def TransformMatrix(TransMatrix, point):
