@@ -1,7 +1,6 @@
 from manimlib.imports import *
 from tkinter import *
 import numpy as np
-#from tuts import *
 import input_gui
 import output_gui
 import data
@@ -26,9 +25,8 @@ class Shapes(Scene):
         inputData = input_gui.inputs()
         inputPoints = inputData.points
 
-
+        print(inputData.ref_x)
         rot = inputData.rot
-        scale = inputData.scale
         shift_x = inputData.shift_x
         shift_y = inputData.shift_y
 
@@ -78,14 +76,10 @@ class Shapes(Scene):
         T_shear = np.array([[1, shearValue, 0],
                             [0, 1, 0],
                             [0, 0, 1]])
-
-
-
-
         shape1 = Polygon(*inputPoints)
 
 
-        ##          ------- SHITFING / TRANSITION  ------------------
+        #          ------- SHIFTING / TRANSLATION  ------------------
         for i in range(len(inputPoints)):
             inputPoints[i] += np.array([0,1,0]) * shift_y
 
@@ -122,27 +116,33 @@ class Shapes(Scene):
         factor = 3
 
       ##  self.play(FadeInFromLarge(shape1, scale_factor=factor))
-        for i in range(len(inputPoints)):
-            inputPoints[i] = TransformMatrix(T_Y_equal_X_reflection, inputPoints[i])
-        print(inputPoints)
+        reflections = [inputData.ref_y, inputData.ref_x, inputData.ref_y_x, inputData.ref_y_negative_x]
+        print("Reflections:")
+        print(reflections)
+        T_reflections = [T_Y_axis_reflection, T_X_axis_reflection, T_Y_equal_X_reflection, T_Y_equal_negative_X_reflection]
+        for i in range(4):
+            if reflections[i] != 0:
+                for j in range(len(inputPoints)):
+                    inputPoints[j] = TransformMatrix(T_reflections[i], inputPoints[j])
+                shape2 = Polygon(*inputPoints)
+                shape2.set_fill(GREEN, opacity=1)
+                shape2.fill_opacity = 1
+                self.play(Transform(shape1, shape2))
+                self.wait(2)
 
-        shape2 = Polygon(*inputPoints)
-        shape2.set_fill(GREEN, opacity=1)
-        shape2.fill_opacity = 1;
-        ##print(shape2.points)
-        self.play(Transform(shape1, shape2))
-        ##self.play(ApplyMethod(shape2.shift, np.array([0, 1, 0])))
-        self.wait(5)
         output_gui.outputs(data.Outputs(inputPoints), inputPoints)
 
-        ##shape2 =
+
+
+
+
 
 
 def TransformMatrix(TransMatrix, point):
-    ## (1,3)
     point = point.reshape(3, 1)
     c = np.dot(TransMatrix, point)
 
     c = c.reshape(1, 3)
     return c
+
 

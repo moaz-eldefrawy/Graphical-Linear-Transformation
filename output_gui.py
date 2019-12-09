@@ -12,5 +12,5 @@ def outputs(output_data, input_data):
         Label(root, text=str(point[0]) + " " + str(point[1])).grid(row=row, column=1)
         row = row + 1
 
-    Button(root, text="Run Animation", command=root.destroy).grid(row=row,column=1)
+    Button(root, text="Run Animation", command=root.destroy).grid(row=row,column=0)
     root.mainloop()
