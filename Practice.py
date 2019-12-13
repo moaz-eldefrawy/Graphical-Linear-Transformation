@@ -32,7 +32,6 @@ class Shapes(Scene):
         scale_y = inputData.scale_y
 
 
-
         inputPoints = np.asarray(inputPoints);
 
 
@@ -120,13 +119,9 @@ class Shapes(Scene):
         inputPoints = reflect(self, reflections,T_reflections,inputPoints)
 
         #  --------------SCALING ----------------------
-        inputPoints = scale(self, T_scaling, inputPoints)
-        output_gui.outputs(data.Outputs(inputPoints), inputPoints)
-
-
-
-
-
+        if scale_x and scale_y:
+            inputPoints = scale(self, T_scaling, inputPoints)
+            output_gui.outputs(data.Outputs(inputPoints), inputPoints)
 
 
 def TransformMatrix(TransMatrix, point):
@@ -135,6 +130,7 @@ def TransformMatrix(TransMatrix, point):
 
     c = c.reshape(1, 3)
     return c
+
 
 def reflect(self, reflections, T_reflections, inputPoints):
     shape1 = Polygon(*inputPoints)
@@ -163,10 +159,23 @@ def shift (self, T_shifting, inputPoints):
 
 def scale (self, T_scaling, inputPoints):
     shape1 = Polygon(*inputPoints)
+    shift_x = -1* inputPoints[0][0]
+    shift_y = -1* inputPoints[0][1]
+    T_shifting = np.array([[1, 0, shift_x],
+                           [0, 1, shift_y],
+                           [0, 0, 1]])
+
+    inputPoints = shift(self, T_shifting, inputPoints)
+
     for i in range(len(inputPoints)):
         inputPoints[i] = TransformMatrix(T_scaling, inputPoints[i])
 
     shape2 = Polygon(*inputPoints)
     self.play(Transform(shape1, shape2))
     self.wait(2)
+
+    T_shifting = np.array([[1, 0, -1 * shift_x],
+                           [0, 1, -1 * shift_y],
+                           [0, 0, 1]])
+    inputPoints = shift(self, T_shifting, inputPoints)
     return inputPoints
