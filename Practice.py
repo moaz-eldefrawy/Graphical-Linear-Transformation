@@ -121,12 +121,19 @@ class Shapes(Scene):
         #  --------------SCALING ----------------------
         if scale_x and scale_y:
             inputPoints = scale(self, T_scaling, inputPoints)
-            output_gui.outputs(data.Outputs(inputPoints), inputPoints)
+
+        output_gui.outputs(data.Outputs(inputPoints), inputPoints)
 
 
 def TransformMatrix(TransMatrix, point):
     point = point.reshape(3, 1)
-    c = np.dot(TransMatrix, point)
+    #c = np.dot(TransMatrix, point)
+    c = np.array([[0],
+                 [0],
+                 [0]])
+    for i in range(3):
+        for j in range(3):
+            c[i] += TransMatrix[i][j] * point[j]
 
     c = c.reshape(1, 3)
     return c
