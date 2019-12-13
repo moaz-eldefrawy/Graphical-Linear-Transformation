@@ -18,5 +18,6 @@ class Inputs:
 
 
 class Outputs:
-    def __init__(self, points):
+    def __init__(self, points, T_final_matrix):
+        self.T_final_matrix = T_final_matrix
         self.points = points

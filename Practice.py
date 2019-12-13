@@ -9,7 +9,9 @@ import pyclbr
 import math
 
 
-
+T_final_matrix = np.array([[1, 0, 0],
+                            [0, 1, 0],
+                            [0, 0, 1]])
 class Shapes(Scene):
     # A few simple shapes
     def construct(self):
@@ -78,6 +80,7 @@ class Shapes(Scene):
 
 
 
+
         ##self.play(ShowCreation(shape1))
         ##shape3 = shape1
         unitScale = 2
@@ -122,7 +125,7 @@ class Shapes(Scene):
         if scale_x and scale_y:
             inputPoints = scale(self, T_scaling, inputPoints)
 
-        output_gui.outputs(data.Outputs(inputPoints), inputPoints)
+        output_gui.outputs(data.Outputs(inputPoints, T_final_matrix))
 
 
 def TransformMatrix(TransMatrix, point):
@@ -145,11 +148,14 @@ def reflect(self, reflections, T_reflections, inputPoints):
         if reflections[i] != 0:
             for j in range(len(inputPoints)):
                 inputPoints[j] = TransformMatrix(T_reflections[i], inputPoints[j])
+            multiply_final_matrix(T_reflections[i])
             shape2 = Polygon(*inputPoints)
             shape2.set_fill(GREEN, opacity=1)
             shape2.fill_opacity = 1
             self.play(Transform(shape1, shape2))
             self.wait(2)
+
+
     return inputPoints
 
 
@@ -177,6 +183,8 @@ def scale (self, T_scaling, inputPoints):
     for i in range(len(inputPoints)):
         inputPoints[i] = TransformMatrix(T_scaling, inputPoints[i])
 
+    multiply_final_matrix(T_scaling)
+
     shape2 = Polygon(*inputPoints)
     self.play(Transform(shape1, shape2))
     self.wait(2)
@@ -186,3 +194,14 @@ def scale (self, T_scaling, inputPoints):
                            [0, 0, 1]])
     inputPoints = shift(self, T_shifting, inputPoints)
     return inputPoints
+
+def multiply_final_matrix (T_Matrix):
+    global T_final_matrix
+    ans = np.array([[0, 0, 0],
+                    [0, 0, 0],
+                    [0, 0, 0]])
+    for i in range(3):
+        for j in range(3):
+            for k in range(3):
+                ans[i][j] += T_Matrix[i][k] * T_final_matrix[k][j]
+    T_final_matrix = ans
