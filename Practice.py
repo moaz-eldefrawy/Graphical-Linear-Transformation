@@ -39,8 +39,8 @@ class Shapes(Scene):
         print(origin_x)
         print(origin_y)
         rot = inputData.rot
-        shift_x = float(inputData.shift_x - origin_x)
-        shift_y = inputData.shift_y - origin_y
+        shift_x = inputData.shift_x - inputPoints[0][0]
+        shift_y = inputData.shift_y - inputPoints[0][1]
         scale_x = inputData.scale_x
         scale_y = inputData.scale_y
 
