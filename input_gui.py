@@ -30,11 +30,16 @@ def inputs():
 
     def end():
         for entry in entry_list:
-            print(entry.get())
             if len(entry.get()) != 0:
                 entry_values.append(int(entry.get()))
             else:
                 entry_values.append(0)
+        global a
+        if len(entry_list[0].get()) == 0:
+            entry_values[0] = a[0][0]
+
+        if len(entry_list[1].get()) == 0:
+            entry_values[1] = a[0][1]
 
         root.destroy()
 
@@ -108,14 +113,14 @@ def inputs():
     entry_list.append(y_negative_x_ref)
     y_negative_x_ref.grid(row=6, column=3, padx=(5, 5), pady=(5, 5))
 
-    rot_label = Label(text="Rotation").grid(row=7, column=1, sticky=E)
+    rot_label = Label(text="Rotation").grid(row=7, column=0, sticky=E)
     rot = Entry(root, width=3)
     entry_list.append(rot)
-    rot.grid(row=7, column=2, padx=(5, 5), pady=(5, 5))
+    rot.grid(row=7, column=1, padx=(5, 5), pady=(5, 5))
 
     Button(root, text="Run", command=end).grid(row = 8,column = 1)
 
-    default = Button(root, text="Enter some default values", command=add_default)
+    default = Button(root, text="default values", command=add_default)
     default.grid(row=10, column=1)
 
     Label(text="Points:").grid(row=9, column=0)

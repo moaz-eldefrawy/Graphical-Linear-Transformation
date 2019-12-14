@@ -1,17 +1,14 @@
 from manimlib.imports import *
-from tkinter import *
 import numpy as np
 import input_gui
 import output_gui
 import data
-import os
-import pyclbr
 import math
 
 
 T_final_matrix = np.array([[1, 0, 0],
                             [0, 1, 0],
-                            [0, 0, 1]])
+                            [0, 0, 1]], dtype="float64")
 class Shapes(Scene):
     # A few simple shapes
     def construct(self):
@@ -25,41 +22,25 @@ class Shapes(Scene):
 
 
         inputData = input_gui.inputs()
+
         inputPoints = inputData.points
 
-        origin_x = 0.0
-        origin_y = 0.0
-        for i in range(len(inputPoints)):
-            origin_x = origin_x +  inputPoints[i][0]
-            origin_y = origin_y +  inputPoints[i][1]
-
-
-        origin_x = origin_x / len(inputPoints)
-        origin_y = origin_y / len(inputPoints)
-        print(origin_x)
-        print(origin_y)
         rot = inputData.rot
+
         shift_x = inputData.shift_x - inputPoints[0][0]
         shift_y = inputData.shift_y - inputPoints[0][1]
         scale_x = inputData.scale_x
         scale_y = inputData.scale_y
-
         print(shift_x)
         print(shift_y)
 
-
-        inputPoints = np.asarray(inputPoints);
-
-
-
-
-
+        inputPoints = np.asarray(inputPoints)
 
         cos = math.cos(math.radians(rot))
         sin = math.sin(math.radians(rot))
         T_rotation = np.array([[cos, sin, 0],
                                 [-sin, cos, 0],
-                                [0, 0, 0]],dtype="float64")
+                                [0, 0, 1]],dtype="float64")
 
         T_X_axis_reflection = np.array([[1, 0, 0],
                                         [0, -1, 0],
@@ -111,16 +92,15 @@ class Shapes(Scene):
         factor = 3
 
       ##  self.play(FadeInFromLarge(shape1, scale_factor=factor))
+
         if(rot != 0):
             inputPoints2 =  inputPoints
             inputPoints2 = inputPoints.astype("float64")
             shape1 = Polygon(*inputPoints)
-
             self.add(shape1)
             self.wait(2)
             for i in range(len(inputPoints2)):
                 inputPoints2[i] = rotation_trans(T_rotation,inputPoints2[i]);
-
             print("After rotation")
             print(inputPoints2)
             shape2 = Polygon(*inputPoints2)
@@ -130,6 +110,7 @@ class Shapes(Scene):
             np.around(inputPoints2, decimals=3, out=None)
             inputPoints = inputPoints2
             print(inputPoints)
+            multiply_final_matrix(T_rotation)
 
         #          ------- SHIFTING / TRANSLATION  ------------------
         inputPoints = shift(self, T_shifting, inputPoints)
@@ -233,6 +214,7 @@ def shift (self, T_shifting, inputPoints):
     self.play(Transform(shape1, shape2))
     self.wait(2)
     self.play(FadeOut(shape1))
+    multiply_final_matrix(T_shifting)
     return inputPoints
 
 
@@ -265,9 +247,11 @@ def multiply_final_matrix (T_Matrix):
     global T_final_matrix
     ans = np.array([[0, 0, 0],
                     [0, 0, 0],
-                    [0, 0, 0]])
+                    [0, 0, 0]], dtype="float64")
     for i in range(3):
         for j in range(3):
             for k in range(3):
                 ans[i][j] += T_Matrix[i][k] * T_final_matrix[k][j]
+    ans = np.around(ans, decimals=3, out=None)
+
     T_final_matrix = ans
