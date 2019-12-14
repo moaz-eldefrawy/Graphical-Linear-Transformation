@@ -4,6 +4,7 @@ import data
 
 def outputs(output_data):
     root = Tk()
+    root.resizable(0, 0)
     final_points = Label(root, text="Points:")
     final_points.grid(row=0, column=0, sticky=W)
 
