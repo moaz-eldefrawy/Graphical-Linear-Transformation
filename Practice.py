@@ -122,7 +122,7 @@ class Shapes(Scene):
             shape2 = Polygon(*inputPoints)
             self.play(Transform(shape1, shape2))
             self.wait(2)
-
+            self.play(FadeOut(shape1))
             np.around(inputPoints, decimals=3, out=None)
 
             shift_x = -1 * shift_x
@@ -132,6 +132,7 @@ class Shapes(Scene):
                                    [0, 0, 1]])
             inputPoints = shift(self, T_shifting, inputPoints)
 
+            self.wait(2)
 
             print(inputPoints)
             multiply_final_matrix(T_rotation)
