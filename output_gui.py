@@ -1,4 +1,5 @@
 from tkinter import *
+import math
 import data
 
 
@@ -20,7 +21,11 @@ def outputs(output_data):
     row = 1
     for i in range(3):
         for j in range(3):
-            Label(root, text=str(output_data.T_final_matrix[i][j]) + " ").grid(row=row, column=j + 3)
+
+            if math.fabs(output_data.T_final_matrix[i][j]) < 0.0001:
+                Label(root, text="0 ").grid(row=row, column=j + 3)
+            else:
+                Label(root, text=str(output_data.T_final_matrix[i][j]) + " ").grid(row=row, column=j + 3)
         row = row + 1
 
     Button(root, text="Run Animation", command=root.destroy).grid(row=row, column=1)
