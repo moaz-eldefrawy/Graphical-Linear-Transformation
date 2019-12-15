@@ -108,7 +108,6 @@ class Shapes(Scene):
             shape1 = Polygon(*inputPoints)
             self.add(shape1)
             self.wait(2)
-
             shift_x = -1 * inputPoints[0][0]
             shift_y = -1 * inputPoints[0][1]
             T_shifting = np.array([[1, 0, shift_x],
@@ -131,9 +130,7 @@ class Shapes(Scene):
                                    [0, 1, shift_y],
                                    [0, 0, 1]])
             inputPoints = shift(self, T_shifting, inputPoints)
-
             self.wait(2)
-
             print(inputPoints)
             multiply_final_matrix(T_rotation)
 
