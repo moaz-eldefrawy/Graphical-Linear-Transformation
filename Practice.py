@@ -90,16 +90,18 @@ class Shapes(Scene):
         ##  self.play(FadeInFromLarge(shape1, scale_factor=factor))
 
         #          ------- SHIFTING / TRANSLATION  ------------------
-        inputPoints = shift(self, T_shifting, inputPoints)
+        shape1 = Polygon(*inputPoints)
+        if(shift_x !=0 and shift_y != 0):
+            inputPoints = shift(self, T_shifting, inputPoints, shape1)
         #  --------------SCALING ----------------------
         if scale_x and scale_y:
-            inputPoints = scale(self, T_scaling, inputPoints)
+            inputPoints = scale(self, T_scaling, inputPoints, shape1)
         #          ------- REFLECTIONS ------------------
         reflections = [inputData.ref_y, inputData.ref_x, inputData.ref_y_x, inputData.ref_y_negative_x]
         print("Reflections:")
         print(reflections)
         T_reflections = [T_Y_axis_reflection, T_X_axis_reflection, T_Y_equal_X_reflection, T_Y_equal_negative_X_reflection]
-        inputPoints = reflect(self, reflections,T_reflections,inputPoints)
+        inputPoints = reflect(self, reflections,T_reflections,inputPoints , shape1)
 
 
         #  --------------ROTATION ----------------------
@@ -107,21 +109,23 @@ class Shapes(Scene):
             inputPoints2 = inputPoints.astype("float64")
             shape1 = Polygon(*inputPoints)
             self.add(shape1)
+            shape1.set_fill(BLUE, opacity=1)
             self.wait(2)
             shift_x = -1 * inputPoints[0][0]
             shift_y = -1 * inputPoints[0][1]
             T_shifting = np.array([[1, 0, shift_x],
                                    [0, 1, shift_y],
                                    [0, 0, 1]])
-            inputPoints = shift(self, T_shifting, inputPoints)
+            inputPoints = shift(self, T_shifting, inputPoints, shape1)
 
             for i in range(len(inputPoints)):
                 inputPoints[i] = TransformMatrix(T_rotation, inputPoints[i]);
 
             shape2 = Polygon(*inputPoints)
+            shape2.set_fill(YELLOW, opacity=1)
             self.play(Transform(shape1, shape2))
-            self.wait(2)
-            self.play(FadeOut(shape1))
+            self.wait(1)
+            ##self.play(FadeOut(shape1))
             np.around(inputPoints, decimals=3, out=None)
 
             shift_x = -1 * shift_x
@@ -129,8 +133,8 @@ class Shapes(Scene):
             T_shifting = np.array([[1, 0, shift_x],
                                    [0, 1, shift_y],
                                    [0, 0, 1]])
-            inputPoints = shift(self, T_shifting, inputPoints)
-            self.wait(2)
+            inputPoints = shift(self, T_shifting, inputPoints, shape1)
+            self.wait(1)
             print(inputPoints)
             multiply_final_matrix(T_rotation)
 
@@ -185,10 +189,9 @@ def rotation_trans(TransMatrix, point):
 
 
 '''
-def reflect(self, reflections, T_reflections, inputPoints):
-    shape1 = Polygon(*inputPoints)
+def reflect(self, reflections, T_reflections, inputPoints, shape1):
     for i in range(4):
-        if reflections[i] != 0:
+        if (reflections[i] != 0):
             for j in range(len(inputPoints)):
                 inputPoints[j] = TransformMatrix(T_reflections[i], inputPoints[j])
             multiply_final_matrix(T_reflections[i])
@@ -196,35 +199,35 @@ def reflect(self, reflections, T_reflections, inputPoints):
             shape2.set_fill(GREEN, opacity=1)
             shape2.fill_opacity = 1
             self.play(Transform(shape1, shape2))
-            self.wait(2)
+            self.wait(1)
 
     self.play(FadeOut(shape1))
     return inputPoints
 
 
-def shift (self, T_shifting, inputPoints):
-    shape1 = Polygon(*inputPoints)
+def shift (self, T_shifting, inputPoints, shape1):
+    shape1.set_fill(RED, opacity=1)
     inputPoints = inputPoints.astype("float64")
     for i in range(len(inputPoints)):
         inputPoints[i] = TransformMatrix(T_shifting, inputPoints[i])
 
     shape2 = Polygon(*inputPoints)
+    shape2.set_fill(RED, opacity=1)
     self.play(Transform(shape1, shape2))
-    self.wait(2)
-    self.play(FadeOut(shape1))
+    self.wait(1.5)
     multiply_final_matrix(T_shifting)
     return inputPoints
 
 
-def scale(self, T_scaling, inputPoints):
-    shape1 = Polygon(*inputPoints)
+def scale(self, T_scaling, inputPoints, shape1):
+    shape1.set_fill(PINK, opacity=1)
     shift_x = -1* inputPoints[0][0]
     shift_y = -1* inputPoints[0][1]
     T_shifting = np.array([[1, 0, shift_x],
                            [0, 1, shift_y],
                            [0, 0, 1]])
 
-    inputPoints = shift(self, T_shifting, inputPoints)
+    inputPoints = shift(self, T_shifting, inputPoints, shape1)
 
     for i in range(len(inputPoints)):
         inputPoints[i] = TransformMatrix(T_scaling, inputPoints[i])
@@ -232,13 +235,13 @@ def scale(self, T_scaling, inputPoints):
     multiply_final_matrix(T_scaling)
 
     shape2 = Polygon(*inputPoints)
+    shape2.set_fill(PINK, opacity=1)
     self.play(Transform(shape1, shape2))
     self.wait(2)
-    self.play(FadeOut(shape1));
     T_shifting = np.array([[1, 0, -1 * shift_x],
                            [0, 1, -1 * shift_y],
                            [0, 0, 1]])
-    inputPoints = shift(self, T_shifting, inputPoints)
+    inputPoints = shift(self, T_shifting, inputPoints, shape1)
     return inputPoints
 
 def multiply_final_matrix (T_Matrix):
